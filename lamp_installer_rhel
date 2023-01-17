@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Install pip
+# dnf install pip
+
+# Install pipenv
+# python -m pip install pipenv
+
+# Enter pipenv shell 
+# pipenv shell 
+
+# Install Apache web server
+if dnf list installed "httpd" >/dev/null 2>&1; then
+	echo "Apache is already installed"
+else
+	echo "Installing Apache..."	
+	dnf install httpd -y
+fi
+
+# Install MySQL server
+if dnf list installed "mariadb-server" >/dev/null 2>&1; then
+	echo "MariaDB is already installed"
+else
+	echo "Installing MariaDB..."
+	dnf install mariadb-server -y
+fi
+
+# Start MySQL service
+systemctl start mariadb.service
+
+## Check for 'expect' command
+if ! which expect &>/dev/null; then
+	echo "Expect not installed, installing now..."
+	dnf install expect -y
+fi
+
+# Run the mysql_secure_installation script with expect 
+expect ./script.exp
+
+# Install PHP and friends
+packages=("php" "php-mysqlnd" "php-mbstring" "php-opcache" "php-gd")
+
+for package in "${packages[@]}"
+do
+	if dnf list installed "$package" >/dev/null 2>&1; then
+		echo "PHP is already installed"
+	else
+		echo "Installing PHP..."
+		dnf "$package" php -y
+	fi
+done
+
+# Start Apache service
+systemctl start httpd.service
+
+# Configure firewalld to open port 80
+firewall-cmd --zone=public --add-port=80/tcp --permanent 
+firewall-cmd --reload
+
+# Print message
+message="Done"
+
+echo -e $message
+
+exit 0
