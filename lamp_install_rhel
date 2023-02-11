@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# Install pip
-# dnf install pip
-
-# Install pipenv
-# python -m pip install pipenv
-
-# Enter pipenv shell 
-# pipenv shell 
-
 # Install Apache web server
 if dnf list installed "httpd" >/dev/null 2>&1; then
 	echo "Apache is already installed"
