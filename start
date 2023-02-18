@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Check which Linux distribution the system is on
+distro_info_raw=$(cat /etc/os-release)
+
+if echo "$distro_info_raw" | grep -q "Ubuntu"; then
+	echo "Ubuntu!"
+	# Run Ubuntu lamp installer
+elif echo "$distro_info_raw" | grep -q "Red Hat Enterprise Linux"; then
+	echo "Red Hat Enterprise Linux!"
+	# Run RHEL lamp installer
+else
+	echo "Apologies, your Linux distribution is not supported yet."
+fi
+
