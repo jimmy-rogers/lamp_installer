@@ -34,10 +34,10 @@ packages=("php" "php-mysqlnd" "php-mbstring" "php-opcache" "php-gd")
 for package in "${packages[@]}"
 do
 	if dnf list installed "$package" >/dev/null 2>&1; then
-		echo "PHP is already installed"
+		echo "$package is already installed"
 	else
-		echo "Installing PHP..."
-		dnf "$package" php -y
+		echo "Installing $package..."
+		dnf install "$package" -y
 	fi
 done
 
