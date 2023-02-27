@@ -26,7 +26,7 @@ if ! which expect &>/dev/null; then
 fi
 
 # Run the mysql_secure_installation script with expect 
-expect ./script.exp
+expect ./mysql_secure_installation.exp
 
 # Install PHP and friends
 packages=("php" "php-mysqlnd" "php-mbstring" "php-opcache" "php-gd")
