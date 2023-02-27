@@ -4,12 +4,14 @@
 distro_info_raw=$(cat /etc/os-release)
 
 if echo "$distro_info_raw" | grep -q "Ubuntu"; then
-	echo "Ubuntu!"
+	echo "Running Ubuntu LAMP installer"
+	./lamp_install_ubuntu
 	# Run Ubuntu lamp installer
 elif echo "$distro_info_raw" | grep -Eq "Red Hat|CentOS"; then
-	echo "Red Hat Enterprise Linux!"
+	echo "Running RHEL LAMP installer"
+	./lamp_install_rhel
 	# Run RHEL lamp installer
 else
-	echo "Apologies, your Linux distribution is not supported yet."
+	echo "Your Linux distribution is not supported."
 fi
 
